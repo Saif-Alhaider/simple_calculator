@@ -30,9 +30,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun HomeScreen(viewModel: HomViewModel = hiltViewModel()) {
     val state = viewModel.state.collectAsState().value
-    HomeContent(onClickAction = {
-        viewModel.updateValue(it)
-    }, onDelete = viewModel::delete, onClear = viewModel::clear, state = state)
+    HomeContent(
+        onClickAction = {
+            viewModel.updateValue(it)
+        },
+        onDelete = viewModel::delete,
+        onClear = viewModel::clear,
+        onEqual = viewModel::performAction,
+        state = state
+    )
 }
 
 @Composable
@@ -40,6 +46,7 @@ fun HomeContent(
     onClickAction: (String) -> Unit,
     onDelete: () -> Unit,
     onClear: () -> Unit,
+    onEqual: () -> Unit,
     state: HomeUiState
 ) {
     Column {
@@ -166,7 +173,7 @@ fun HomeContent(
                     text = "=",
                     textColor = Color(0xFF32a6a3),
                     modifier = Modifier.weight(1f),
-                    onClick = {}
+                    onClick = onEqual
                 )
             }
         }
@@ -176,5 +183,11 @@ fun HomeContent(
 @Preview(showSystemUi = true)
 @Composable
 fun HomePreview() {
-    HomeContent(onClickAction = {}, onDelete = {}, onClear = {}, state = HomeUiState())
+    HomeContent(
+        onClickAction = {},
+        onDelete = {},
+        onClear = {},
+        onEqual = {},
+        state = HomeUiState()
+    )
 }
