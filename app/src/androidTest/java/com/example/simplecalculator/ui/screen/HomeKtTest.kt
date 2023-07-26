@@ -1,6 +1,5 @@
 package com.example.simplecalculator.ui.screen
 
-import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
@@ -41,6 +40,14 @@ class HomeKtTest {
         rule.performClickOnButton("1")
         rule.onNodeWithContentDescription("divide").performClick()
         rule.performClickOnButton("0")
+        rule.performClickOnButton("=")
+        result.performTouchInput { swipeRight() }
+        result.assertTextEquals("")
+    }
+    @Test
+    fun should_deleteNaN_when_dragToTheRight() {
+        rule.performClickOnButton("X")
+        rule.performClickOnButton("X")
         rule.performClickOnButton("=")
         result.performTouchInput { swipeRight() }
         result.assertTextEquals("")
@@ -155,12 +162,20 @@ class HomeKtTest {
     }
 
     @Test
-    fun should_evaluate_NaN_when_dividing_by_zero(){
+    fun should_evaluate_Infinity_when_dividing_by_zero(){
         rule.performClickOnButton("2")
         rule.onNodeWithContentDescription("divide").performClick()
         rule.performClickOnButton("0")
         rule.performClickOnButton("=")
 
         result.assertTextEquals("Infinity")
+    }
+    @Test
+    fun should_evaluate_NaN_when_adding_wrong_operator(){
+        rule.performClickOnButton("X")
+        rule.performClickOnButton("X")
+        rule.performClickOnButton("=")
+
+        result.assertTextEquals("NaN")
     }
 }

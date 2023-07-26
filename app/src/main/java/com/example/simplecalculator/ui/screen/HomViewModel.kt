@@ -20,12 +20,12 @@ class HomViewModel @Inject constructor() : ViewModel() {
 
     fun delete() {
         if (state.value.equation.isNotEmpty()) {
-            if (state.value.equation != "Infinity"){
+            if (state.value.equation == "Infinity" || state.value.equation == "NaN") {
+                clear()
+            } else {
                 _state.update {
                     it.copy(equation = it.equation.substring(0, it.equation.length - 1))
                 }
-            }else{
-                clear()
             }
 
         }
