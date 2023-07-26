@@ -1,5 +1,6 @@
 package com.example.simplecalculator.ui.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,9 +20,14 @@ class HomViewModel @Inject constructor() : ViewModel() {
 
     fun delete() {
         if (state.value.equation.isNotEmpty()) {
-            _state.update {
-                it.copy(equation = it.equation.substring(0, it.equation.length - 1))
+            if (state.value.equation != "Infinity"){
+                _state.update {
+                    it.copy(equation = it.equation.substring(0, it.equation.length - 1))
+                }
+            }else{
+                clear()
             }
+
         }
     }
 
@@ -54,6 +60,7 @@ class HomViewModel @Inject constructor() : ViewModel() {
             _state.update {
                 it.copy(equation = roundResult(result))
             }
+            Log.i("gg", "performAction: ${state.value.equation}")
         } catch (e: Exception) {
             _state.update { it.copy(equation = "NaN") }
         }

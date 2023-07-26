@@ -1,5 +1,6 @@
 package com.example.simplecalculator.ui.screen
 
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
@@ -31,6 +32,16 @@ class HomeKtTest {
     fun should_deleteCharacter_when_dragToTheRight() {
         rule.performClickOnButton("1")
         result.assertTextEquals("1")
+        result.performTouchInput { swipeRight() }
+        result.assertTextEquals("")
+    }
+
+    @Test
+    fun should_deleteInfinity_when_dragToTheRight() {
+        rule.performClickOnButton("1")
+        rule.onNodeWithContentDescription("divide").performClick()
+        rule.performClickOnButton("0")
+        rule.performClickOnButton("=")
         result.performTouchInput { swipeRight() }
         result.assertTextEquals("")
     }
@@ -143,4 +154,13 @@ class HomeKtTest {
         result.assertTextEquals("1")
     }
 
+    @Test
+    fun should_evaluate_NaN_when_dividing_by_zero(){
+        rule.performClickOnButton("2")
+        rule.onNodeWithContentDescription("divide").performClick()
+        rule.performClickOnButton("0")
+        rule.performClickOnButton("=")
+
+        result.assertTextEquals("Infinity")
+    }
 }
