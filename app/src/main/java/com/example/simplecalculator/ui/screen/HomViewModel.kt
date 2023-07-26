@@ -34,7 +34,7 @@ class HomViewModel @Inject constructor() : ViewModel() {
     }
 
     fun performAction() {
-        val pattern = Regex("""\d+(\.\d+)?|[-+*÷]|π""")
+        val pattern = Regex("""\d+(\.\d+)?|[-+*÷%]|π""")
         val equationList = pattern.findAll(state.value.equation).map { it.value }.toList()
         try {
             var result = if (equationList[0] == "π") 3.14 else equationList[0].toDouble()
