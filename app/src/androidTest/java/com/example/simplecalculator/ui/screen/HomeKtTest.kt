@@ -6,6 +6,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
@@ -34,8 +35,6 @@ class HomeKtTest {
         result.performTouchInput { swipeRight() }
         result.assertTextEquals("")
     }
-
-    @Test
     fun should_displayAllNumbers_when_clickingAllNumbers() {
         for (number in 0..9) {
             rule.performClickOnButton(number.toString())
@@ -112,4 +111,33 @@ class HomeKtTest {
 
         result.assertTextEquals("5")
     }
+
+    @Test
+    fun should_evaluate_zero_when_modeling_even_numbers(){
+        rule.performClickOnButton("4")
+        rule.performClickOnButton("%")
+        rule.performClickOnButton("4")
+        rule.performClickOnButton("=")
+
+        result.assertTextEquals("0")
+    }
+    @Test
+    fun should_evaluate_number_when_modeling_odd_numbers(){
+        rule.performClickOnButton("5")
+        rule.performClickOnButton("%")
+        rule.performClickOnButton("3")
+        rule.performClickOnButton("=")
+
+        result.assertTextEquals("2")
+    }
+    @Test
+    fun should_evaluate_one_when_modeling_evenAndOdd_numbers(){
+        rule.performClickOnButton("2")
+        rule.performClickOnButton("%")
+        rule.performClickOnButton("3")
+        rule.performClickOnButton("=")
+
+        result.assertTextEquals("1")
+    }
+
 }
