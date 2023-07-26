@@ -65,4 +65,24 @@ class HomeKtTest {
         rule.performClickOnButton("C")
         result.assertTextEquals("")
     }
+
+    @Test
+    fun when_add_two_numbers_should_present_the_result_of_the_addition() {
+        rule.performClickOnButton("1")
+        rule.performClickOnButton("+")
+        rule.performClickOnButton("2")
+        rule.performClickOnButton("=")
+        result.assertTextEquals("3")
+    }
+
+    @Test
+    fun when_add_multiple_numbers_should_represent_their_result_of_the_addition() {
+        rule.performClickOnButton("1")
+        rule.performClickOnButton("+")
+        rule.performClickOnButton("2")
+        rule.performClickOnButton("+")
+        rule.performClickOnButton("3")
+        rule.performClickOnButton("=")
+        result.assertTextEquals("6")
+    }
 }
