@@ -34,26 +34,34 @@ class HomViewModel @Inject constructor() : ViewModel() {
     }
 
     fun performAction() {
-        val pattern = Regex("""\d+(\.\d+)?|[-+*/]""")
+        val pattern = Regex("""\d+(\.\d+)?|[-+*/]|π""")
         val equationList = pattern.findAll(state.value.equation).map { it.value }.toList()
         try {
-            var result = equationList[0].toDouble()
+            var result = if (equationList[0] == "π") 3.14 else equationList[0].toDouble()
             for (i in 1 until equationList.size step 2) {
                 val operator = equationList[i]
-                val operand = equationList[i + 1].toDouble()
+                val operand =
+                    if (equationList[i + 1] == "π") 3.14 else equationList[i + 1].toDouble()
 
                 when (operator) {
                     "+" -> result += operand
                     "-" -> result -= operand
                     "X" -> result *= operand
                     "÷" -> result /= operand
+                    "%" -> result %= operand
                     else -> throw IllegalArgumentException("Unsupported operator: $operator")
                 }
             }
-            _state.update { it.copy(equation = result.toString()) }
+            _state.update {
+                it.copy(
+                    equation = String.format("%.2f", result)
+                )
+            }
         } catch (e: Exception) {
             _state.update { it.copy(equation = "NaN") }
             Log.e("gg", "performAction: NAN\n$e")
         }
+        Log.i("gg", "performAction: $equationList")
     }
+
 }

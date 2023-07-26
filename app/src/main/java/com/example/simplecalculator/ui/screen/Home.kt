@@ -92,10 +92,10 @@ fun HomeContent(
                     onClick = onClear
                 )
                 CalculatingButton(
-                    text = "()",
+                    text = "π",
                     textColor = Color(0xFF32a6a3),
                     modifier = Modifier.weight(1f),
-                    onClick = { onClickAction("()") }
+                    onClick = { onClickAction("π") }
                 )
                 CalculatingButton(
                     text = "%",
