@@ -106,7 +106,9 @@ fun HomeContent(
                 CalculatingButton(
                     text = "÷",
                     textColor = Color(0xFF32a6a3),
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .semantics { contentDescription = "divide" },
                     onClick = { onClickAction("÷") }
                 )
             }

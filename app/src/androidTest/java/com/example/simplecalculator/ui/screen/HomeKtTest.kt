@@ -85,4 +85,31 @@ class HomeKtTest {
         rule.performClickOnButton("=")
         result.assertTextEquals("6")
     }
+
+    @Test
+    fun when_multiply_by_number_then_add_another_number() {
+        rule.performClickOnButton("2")
+        rule.performClickOnButton("X")
+        rule.performClickOnButton("3")
+        rule.performClickOnButton("+")
+        rule.performClickOnButton("4")
+        rule.performClickOnButton("=")
+        result.assertTextEquals("10")
+    }
+
+    @Test
+    fun when_divide_multi_times() {
+        rule.performClickOnButton("1")
+        rule.performClickOnButton("0")
+        rule.performClickOnButton("0")
+        rule.onNodeWithContentDescription("divide").performClick()
+        rule.performClickOnButton("2")
+        rule.onNodeWithContentDescription("divide").performClick()
+        rule.performClickOnButton("2")
+        rule.onNodeWithContentDescription("divide").performClick()
+        rule.performClickOnButton("5")
+        rule.performClickOnButton("=")
+
+        result.assertTextEquals("5")
+    }
 }
