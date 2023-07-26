@@ -152,10 +152,10 @@ class HomeKtTest {
     }
 
     @Test
-    fun should_evaluate_one_when_modeling_evenAndOdd_numbers() {
-        rule.performClickOnButton("2")
-        rule.performClickOnButton("%")
+    fun should_evaluate_one_when_modeling_oddAndEven_numbers() {
         rule.performClickOnButton("3")
+        rule.performClickOnButton("%")
+        rule.performClickOnButton("2")
         rule.performClickOnButton("=")
 
         result.assertTextEquals("1")
