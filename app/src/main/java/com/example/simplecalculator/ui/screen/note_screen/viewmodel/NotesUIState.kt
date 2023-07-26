@@ -5,4 +5,5 @@ data class NotesUIState(
     val nameList: List<String> = emptyList(),
     val originalList: List<String> = emptyList(),
     val isFiltered: Boolean = false,
+    val isAddButtonEnabled: Boolean = false,
 )

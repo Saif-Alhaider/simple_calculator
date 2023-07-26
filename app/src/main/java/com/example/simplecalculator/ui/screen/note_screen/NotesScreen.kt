@@ -76,11 +76,13 @@ fun NotesContent(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(
+                enabled = state.isAddButtonEnabled,
                 onClick = onClickAdd,
                 modifier = Modifier.semantics { contentDescription = "Add button" }
             ) {
                 Text(text = stringResource(R.string.add))
             }
+
 
             Button(
                 onClick = onClickFilter,
@@ -105,7 +107,7 @@ fun NotesContent(
                 .padding(16.dp)
                 .fillMaxSize()
                 .background(color = Color(0xFFB8ACA0), shape = RoundedCornerShape(4))
-                .semantics { contentDescription = "Names lazy column" },
+                .semantics { contentDescription = "lazy column" },
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(state.nameList.size) { index ->
@@ -115,7 +117,7 @@ fun NotesContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .semantics { contentDescription = "Names lazy column item" }
+                            .semantics { contentDescription = "item" }
                             .clickable { onClickName(state.nameList[index]) }
                     )
                 }

@@ -16,20 +16,21 @@ class NotesViewModel @Inject constructor() : ViewModel() {
     fun onTextChange(text: String) {
         _state.update {
             it.copy(
-                name = text
+                name = text,
+                isAddButtonEnabled = text.isNotBlank() && !it.nameList.contains(text)
             )
         }
     }
 
     fun onClickAdd() {
-        if (_state.value.name.isNotBlank() && !_state.value.nameList.contains(_state.value.name)) {
-            _state.update {
-                it.copy(
-                    nameList = it.nameList + it.name
-                )
-            }
+        _state.update {
+            it.copy(
+                nameList = it.nameList + it.name,
+                name = ""
+            )
         }
     }
+
 
     fun onClickFilter() {
         _state.update {
