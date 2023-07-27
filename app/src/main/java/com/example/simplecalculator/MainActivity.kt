@@ -12,14 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.simplecalculator.ui.screen.HomeContent
 import com.example.simplecalculator.ui.screen.HomeScreen
+import com.example.simplecalculator.ui.screen.filter_items.FilterItemsScreen
 import com.example.simplecalculator.ui.theme.SimpleCalculatorTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SimpleCalculatorTheme {
-                HomeScreen()
+                FilterItemsScreen()
             }
         }
     }
