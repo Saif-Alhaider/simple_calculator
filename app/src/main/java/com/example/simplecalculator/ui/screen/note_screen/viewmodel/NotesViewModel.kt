@@ -16,8 +16,8 @@ class NotesViewModel @Inject constructor() : ViewModel() {
     fun onTextChange(text: String) {
         _state.update {
             it.copy(
-                name = text,
-                isAddButtonEnabled = text.isNotBlank() && !it.nameList.contains(text)
+                text = text,
+                isAddButtonEnabled = text.isNotBlank() && !it.notesList.any { note -> note.text == text }
             )
         }
     }
@@ -25,8 +25,10 @@ class NotesViewModel @Inject constructor() : ViewModel() {
     fun onClickAdd() {
         _state.update {
             it.copy(
-                nameList = it.nameList + it.name,
-                name = ""
+                notesList = it.notesList + Note(id = it.currentId + 1, text = it.text),
+                text = "",
+                isAddButtonEnabled = false,
+                currentId = it.currentId + 1
             )
         }
     }
@@ -34,24 +36,24 @@ class NotesViewModel @Inject constructor() : ViewModel() {
 
     fun onClickFilter() {
         _state.update {
-            if (!_state.value.isFiltered && _state.value.name.isNotBlank()) {
+            if (!_state.value.isFiltered && _state.value.text.isNotBlank()) {
                 it.copy(
-                    originalList = it.nameList,
-                    nameList = it.nameList.filter { filter -> filter.contains(it.name) },
+                    originalList = it.notesList,
+                    notesList = it.notesList.filter { filter -> filter.text.contains(it.text) },
                     isFiltered = true
                 )
             } else {
-                it.copy(nameList = it.originalList, isFiltered = false)
+                it.copy(notesList = it.originalList, isFiltered = false)
             }
         }
     }
 
 
-    fun onClickName(name: String) {
+    fun onClickNote(id: Int, text: String) {
         _state.update {
             it.copy(
-                nameList = it.nameList - name,
-                originalList = it.originalList - name
+                notesList = it.notesList - Note(id = id, text = text),
+                originalList = it.originalList - Note(id = id, text = text),
             )
         }
     }
@@ -59,7 +61,7 @@ class NotesViewModel @Inject constructor() : ViewModel() {
     fun onClickDeleteAll() {
         _state.update {
             it.copy(
-                nameList = emptyList(),
+                notesList = emptyList(),
                 originalList = emptyList()
             )
         }

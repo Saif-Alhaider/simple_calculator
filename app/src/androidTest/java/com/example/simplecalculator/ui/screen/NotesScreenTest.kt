@@ -17,7 +17,7 @@ import org.junit.Test
 class NotesScreenTest {
     @get:Rule
     val rule = createComposeRule()
-    private val nameTextField = rule.onNodeWithContentDescription("Name text Field")
+    private val noteTextField = rule.onNodeWithContentDescription("Note text Field")
     private val addButton = rule.onNodeWithContentDescription("Add button")
     private val filterButton = rule.onNodeWithContentDescription("Filter button")
     private val deleteAllButton = rule.onNodeWithContentDescription("Delete all button")
@@ -30,7 +30,7 @@ class NotesScreenTest {
     }
 
     private fun addTextToList(text: String) {
-        nameTextField.performTextInput(text)
+        noteTextField.performTextInput(text)
         addButton.performClick()
     }
 
@@ -42,16 +42,22 @@ class NotesScreenTest {
 
     @Test
     fun should_Not_AddTextToList_when_ClickAddWhileTextIsEmpty() {
-        nameTextField.performTextInput("")
+        noteTextField.performTextInput("")
         addButton.assertIsNotEnabled()
     }
 
     @Test
     fun should_Not_AddTextToList_when_ClickAddWhileTextIsInList() {
         addTextToList("text")
-        nameTextField.performTextInput("text")
+        noteTextField.performTextInput("text")
         addButton.assertIsNotEnabled()
         lazyColumn.onChildren().assertCountEquals(1)
+    }
+
+    @Test
+    fun should_AddTextToListBeNotEnabled_when_ClickAdd() {
+        addTextToList("text")
+        addButton.assertIsNotEnabled()
     }
 
     @Test
@@ -76,7 +82,7 @@ class NotesScreenTest {
         addTextToList("tes")
         addTextToList("te")
         addTextToList("t")
-        nameTextField.performTextInput("te")
+        noteTextField.performTextInput("te")
         filterButton.performClick()
         lazyColumn.onChildren().assertCountEquals(3)
     }
@@ -87,7 +93,7 @@ class NotesScreenTest {
         addTextToList("tes")
         addTextToList("te")
         addTextToList("t")
-        nameTextField.performTextInput("te")
+        noteTextField.performTextInput("te")
         filterButton.performClick()
         filterButton.assertTextEquals("Clear")
         filterButton.performClick()
@@ -107,6 +113,6 @@ class NotesScreenTest {
     @Test
     fun should_TextBeSelected_when_ClickAdd() {
         addTextToList("test")
-        nameTextField.assertIsFocused()
+        noteTextField.assertIsFocused()
     }
 }

@@ -1,9 +1,15 @@
 package com.example.simplecalculator.ui.screen.note_screen.viewmodel
 
 data class NotesUIState(
-    val name: String = "",
-    val nameList: List<String> = emptyList(),
-    val originalList: List<String> = emptyList(),
+    val text: String = "",
+    val notesList: List<Note> = emptyList(),
+    val originalList: List<Note> = emptyList(),
     val isFiltered: Boolean = false,
     val isAddButtonEnabled: Boolean = false,
+    val currentId: Int = 0
+)
+
+data class Note(
+    val id: Int = 1,
+    val text: String = "",
 )
