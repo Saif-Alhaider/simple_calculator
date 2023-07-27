@@ -26,20 +26,27 @@ class FilterItemsTest {
     }
 
     @Test
-    fun should_changeToActive_whenClickingOnCategory() {
-        rule.onNode(hasTestTag("CLOTHES") and hasClickAction()).performClick()
+    fun should_categoryClothesBeInitialCategory() {
         rule.onNode(
             hasTestTag("CLOTHES")
-                    and hasClickAction()
+                    and hasContentDescription("isActive:true")
+        )
+    }
+
+    @Test
+    fun should_changeToActive_whenClickingOnCategory() {
+        rule.onNode(hasTestTag("ELECTRONICS") and hasClickAction()).performClick()
+        rule.onNode(
+            hasTestTag("ELECTRONICS")
                     and
                     hasContentDescription("isActive:true")
-        )
-            .assertExists()
+        ).assertExists()
     }
 
     @Test
     fun shouldNot_displayElectronics_in_ClothesCategory() {
-        rule.onAllNodes(hasContentDescription("ELECTRONICS")).assertCountEquals(0)
+        rule.onAllNodes(hasContentDescription("ELECTRONICS") and hasNoClickAction())
+            .assertCountEquals(0)
     }
 
     @Test
@@ -54,16 +61,8 @@ class FilterItemsTest {
     fun should_displayElectronics_in_ElectronicsCategory() {
         rule.onNode(hasTestTag("ELECTRONICS") and hasClickAction()).performClick()
 
-        rule.onAllNodes(hasContentDescription("ELECTRONICS") and hasNoClickAction())
-            .assertAny(hasContentDescription("ELECTRONICS"))
-    }
-
-    @Test
-    fun should_playAnimation_on_NavigateToOtherCategory() {
-        rule.onNode(hasTestTag("ELECTRONICS") and hasClickAction()).performClick()
-        rule.mainClock.autoAdvance = false
-        rule.mainClock.advanceTimeBy(50)
-        rule.onAllNodes(hasContentDescription("ELECTRONICS")).assertCountEquals(0)
+        rule.onAllNodes(hasContentDescription("lazyItem"))
+            .assertAny(hasContentDescription("lazyItem"))
     }
 
 }

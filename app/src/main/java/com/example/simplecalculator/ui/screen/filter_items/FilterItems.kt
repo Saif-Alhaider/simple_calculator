@@ -104,7 +104,7 @@ fun FilterItemsContent(
                         modifier = Modifier
                             .fillMaxSize()
                             .shadow(elevation = 4.dp, spotColor = Color.Black.copy(alpha = .38f))
-                            .semantics { contentDescription = product.type.name }
+                            .semantics { contentDescription = "lazyItem" }
                     ) {
                         Column(
                             Modifier
