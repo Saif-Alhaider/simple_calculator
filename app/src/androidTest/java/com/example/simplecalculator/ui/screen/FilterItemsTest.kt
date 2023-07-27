@@ -1,6 +1,5 @@
 package com.example.simplecalculator.ui.screen
 
-import android.util.Log
 import androidx.compose.ui.test.assertAny
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.hasClickAction
@@ -44,9 +43,13 @@ class FilterItemsTest {
     }
 
     @Test
-    fun myTest(){
-        Log.i("gg", "myTest: ${rule.onNode(hasContentDescription("lazyRow")).onChildren().fetchSemanticsNodes().size}")
+    fun should_buttonsBeSingleSelected_when_clickOnMultipleButtons() {
+        val filterButtonsCount = rule.onNode(hasContentDescription("lazyRow")).onChildren()
+            .fetchSemanticsNodes().size
+        rule.onAllNodes(hasContentDescription("isActive:false"))
+            .assertCountEquals(filterButtonsCount - 1)
     }
+
     @Test
     fun should_displayElectronics_in_ElectronicsCategory() {
         rule.onNode(hasTestTag("ELECTRONICS") and hasClickAction()).performClick()
